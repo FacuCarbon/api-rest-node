@@ -18,9 +18,7 @@
       }
     </style>
     <script type="module">
-      fetch(
-        "https://api-rest-test-mvt2awkpf-facundo-carbons-projects.vercel.app/movies"
-      )
+      fetch("/api/movies/")
         .then((res) => res.json())
         .then((movies) => {
           const html = movies
@@ -42,12 +40,9 @@
               const article = e.target.closest("article");
               const id = article.dataset.id;
 
-              fetch(
-                `https://api-rest-test-mvt2awkpf-facundo-carbons-projects.vercel.app/movies/${id}`,
-                {
-                  method: "DELETE",
-                }
-              ).then((res) => {
+              fetch(`/api/movies/${id}`, {
+                method: "DELETE",
+              }).then((res) => {
                 if (res.ok) {
                   article.remove();
                 }

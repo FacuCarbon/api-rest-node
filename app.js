@@ -8,6 +8,11 @@ const app = express();
 
 app.disable("x-powered-by");
 app.use(express.json());
+
+// Sirve contenido estático
+app.use(express.static(path.join(__dirname, "web")));
+
+// Configuración de CORS
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -17,29 +22,23 @@ app.use(
         "https://api-rest-test-mvt2awkpf-facundo-carbons-projects.vercel.app",
         "https://movies.com",
       ];
-
       if (ACCEPTED_ORIGINS.includes(origin)) {
         return callback(null, true);
       }
       if (!origin) {
         return callback(null, true);
       }
-
       return callback(new Error("Not allowed by CORS."));
     },
   })
 );
 
-////////
-
-app.use(express.static(path.join(__dirname, "web")));
-
+// Ruta para servir el HTML principal
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "web", "index.html"));
 });
 
-//
-
+// API endpoints
 app.get("/api/movies", (req, res) => {
   const { genre } = req.query;
 
@@ -51,23 +50,13 @@ app.get("/api/movies", (req, res) => {
   }
   res.json(movies);
 });
-///
-
-app.get("/api/movies", (req, res) => {
-  res.json(movies);
-});
-
-//
 
 app.get("/api/movies/:id", (req, res) => {
   const { id } = req.params;
   const movie = movies.find((movie) => movie.id === id);
-  if (movies) return res.json(movie);
-
+  if (movie) return res.json(movie);
   res.status(404).json({ message: "Movie not found" });
 });
-
-//
 
 app.post("/api/movies", (req, res) => {
   const result = validateMovie(req.body);
@@ -75,15 +64,13 @@ app.post("/api/movies", (req, res) => {
   if (result.error) {
     return res.status(400).json({ message: JSON.parse(result.error.message) });
   }
-  const newMoview = {
+  const newMovie = {
     id: crypto.randomUUID(),
     ...result.data,
   };
-  movies.push(newMoview);
-  res.status(201).json(newMoview);
+  movies.push(newMovie);
+  res.status(201).json(newMovie);
 });
-
-//
 
 app.delete("/api/movies/:id", (req, res) => {
   const { id } = req.params;
@@ -98,8 +85,6 @@ app.delete("/api/movies/:id", (req, res) => {
   return res.json({ message: "Movie deleted" });
 });
 
-//
-
 app.patch("/api/movies/:id", (req, res) => {
   const { id } = req.params;
   const result = validatePartialMovie(req.body);
@@ -112,18 +97,16 @@ app.patch("/api/movies/:id", (req, res) => {
   if (movieIndex === -1)
     return res.status(404).json({ message: "Movie not found" });
 
-  const updateMovie = {
+  const updatedMovie = {
     ...movies[movieIndex],
     ...result.data,
   };
-  movies[movieIndex] = updateMovie;
-  return res.json(updateMovie);
+  movies[movieIndex] = updatedMovie;
+  return res.json(updatedMovie);
 });
 
-////////
-
-//
+// Escuchar en el puerto
 const PORT = process.env.PORT ?? 1234;
 app.listen(PORT, () => {
-  console.log(`Server listenging on port http://localhost:${PORT}`);
+  console.log(`Server listening on port http://localhost:${PORT}`);
 });
