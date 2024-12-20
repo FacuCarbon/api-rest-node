@@ -10,7 +10,7 @@ app.disable("x-powered-by");
 app.use(express.json());
 
 // Sirve contenido estático
-app.use(express.static(path.join(__dirname, "web"), { extensions: ["html"] }));
+app.use(express.static(path.join(__dirname, "web")));
 
 // Configuración de CORS
 app.use(
