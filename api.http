@@ -1,0 +1,29 @@
+### Get peliculas
+GET http://localhost:1234/movies
+
+### Get pelicula por ID
+GET http://localhost:1234/movies/7d2832f8-c70a-410e-8963-4c93bf36cc9c
+
+### Get peliculas por genero
+GET http://localhost:1234/movies?genre=Action
+
+### Post crear pelicula
+POST http://localhost:1234/movies
+Content-Type: application/json
+
+{
+    "title": "Dr House",
+    "year": 2001,
+    "director": "Gregory House",
+    "duration": 50000,
+    "poster": "https://img.fruugo.com/product/4/49/14441494_max.jpg",
+    "genre": ["Drama", "Horror"]
+}
+
+### PATCH Actualizar una pelicula
+PATCH http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+    "title": "hola rey"
+}
