@@ -32,9 +32,12 @@ app.use(
 
 ////////
 
+app.use(express.static(path.join(__dirname, "web")));
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "web", "index.html"));
 });
+
 //
 
 app.get("/api/movies", (req, res) => {
