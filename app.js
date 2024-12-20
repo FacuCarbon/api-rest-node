@@ -19,7 +19,7 @@ app.use(
       const ACCEPTED_ORIGINS = [
         "http://localhost:57031",
         "http://localhost:1234",
-        "https://api-rest-test-mvt2awkpf-facundo-carbons-projects.vercel.app",
+        "https://api-rest-test.vercel.app",
         "https://movies.com",
       ];
       if (ACCEPTED_ORIGINS.includes(origin)) {
