@@ -14,6 +14,7 @@ app.use(
       const ACCEPTED_ORIGINS = [
         "http://localhost:57031",
         "http://localhost:1234",
+        "https://api-rest-test-mvt2awkpf-facundo-carbons-projects.vercel.app",
         "https://movies.com",
       ];
 
@@ -36,7 +37,7 @@ app.get("/", (req, res) => {
 });
 //
 
-app.get("/movies", (req, res) => {
+app.get("/api/movies", (req, res) => {
   const { genre } = req.query;
 
   if (genre) {
@@ -49,13 +50,13 @@ app.get("/movies", (req, res) => {
 });
 ///
 
-app.get("/movies", (req, res) => {
+app.get("/api/movies", (req, res) => {
   res.json(movies);
 });
 
 //
 
-app.get("/movies/:id", (req, res) => {
+app.get("/api/movies/:id", (req, res) => {
   const { id } = req.params;
   const movie = movies.find((movie) => movie.id === id);
   if (movies) return res.json(movie);
@@ -65,7 +66,7 @@ app.get("/movies/:id", (req, res) => {
 
 //
 
-app.post("/movies", (req, res) => {
+app.post("/api/movies", (req, res) => {
   const result = validateMovie(req.body);
 
   if (result.error) {
@@ -81,7 +82,7 @@ app.post("/movies", (req, res) => {
 
 //
 
-app.delete("/movies/:id", (req, res) => {
+app.delete("/api/movies/:id", (req, res) => {
   const { id } = req.params;
 
   const movieIndex = movies.findIndex((movie) => movie.id === id);
@@ -96,7 +97,7 @@ app.delete("/movies/:id", (req, res) => {
 
 //
 
-app.patch("/movies/:id", (req, res) => {
+app.patch("/api/movies/:id", (req, res) => {
   const { id } = req.params;
   const result = validatePartialMovie(req.body);
 
